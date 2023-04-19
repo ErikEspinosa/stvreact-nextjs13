@@ -1,11 +1,19 @@
 import { useFocusable } from "@noriginmedia/norigin-spatial-navigation"
 
+
 export default function Card(props) {
-    const { ref, focused } = useFocusable() 
+    const onPress = (extraProps, KeyPressDetails) => console.log(extraProps, KeyPressDetails.pressedKeys)
+
+    const { ref, focused } = useFocusable({
+      extraProps:{caption:props.caption}, 
+      onEnterPress: onPress,
+      saveLastFocusedChild: false
+    }) 
+    
     const { imageUrl, caption } = props
     const styles = {
         backgroundImage: `url(${imageUrl})`,
-        backgroudPosition: 'center center',
+        backgroundPosition: 'center center',
         backgroundSize: 'cover',
     }
 
