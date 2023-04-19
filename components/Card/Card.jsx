@@ -1,4 +1,7 @@
+import { useFocusable } from "@noriginmedia/norigin-spatial-navigation"
+
 export default function Card(props) {
+    const { ref, focused } = useFocusable() 
     const { imageUrl, caption } = props
     const styles = {
         backgroundImage: `url(${imageUrl})`,
@@ -7,10 +10,13 @@ export default function Card(props) {
     }
 
   return (
-    <div className="card focusable">
-        <div className="image" style={styles}>
-            {caption}
-        </div>
+    <div 
+      ref={ref} 
+      className={focused? 'card focused' : 'card'}
+    >
+      <div className="image" style={styles}>
+          {caption}
+      </div>
     </div>
   )
 }

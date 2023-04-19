@@ -2,8 +2,16 @@ import '@/styles/globals.sass'
 import { AppProps } from 'next/app'
 import { Roboto } from 'next/font/google'
 import Layout from '../components/Layout'
-import Script from 'next/script'
 import Head from 'next/head'
+import { FocusContext, init, useFocusable } from '@noriginmedia/norigin-spatial-navigation'
+import { useEffect } from 'react'
+
+init({
+  debug: false,
+  visualDebug: false
+});
+
+const INIT_FOCUS_KEY = 'MENU'
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -12,33 +20,28 @@ const roboto = Roboto({
 })
 
 export default function App({ Component, pageProps }) {
+  const { ref, setFocus, focusKey } = useFocusable()
+
+  useEffect(() => {
+    setFocus(INIT_FOCUS_KEY)
+  }, [setFocus])
+
   return (
-    <Layout>
-      <Head>
-        <title>Claro Video</title>
-      </Head>
-      <style jsx global>{`
-        html {
-          font-family: ${roboto.style.fontFamily};
-        }
-        :focus {
-          outline: 3px solid white;
-        }
-      `}</style>
-      <Script 
-        src="https://luke-chang.github.io/js-spatial-navigation/spatial_navigation.js" 
-        strategy="lazyOnload"
-        onLoad={() => {
-          console.log('spatial_navigation.js')
-          SpatialNavigation.init();
-          SpatialNavigation.add({
-            selector: 'a, .focusable'
-          });
-          SpatialNavigation.makeFocusable();
-          SpatialNavigation.focus();
-        }}
-      />
-      <Component {...pageProps} />
-    </Layout>
+    <FocusContext.Provider value={focusKey}>
+      <div ref={ref} className='app'>
+        <Layout>
+          <Head>
+            <title>Claro Video</title>
+          </Head>
+          <style jsx global>{`
+            html {
+              font-family: ${roboto.style.fontFamily};
+            }
+          `}
+          </style>
+          <Component {...pageProps} />
+        </Layout>
+      </div>
+    </FocusContext.Provider>
   )
 }

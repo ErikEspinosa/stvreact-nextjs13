@@ -24,17 +24,14 @@ main
         .logo
             margin-right: 4rem
         .menu
-            margin: 0
-            padding: 0
-            li
+            a
                 display: inline-block
                 font-size: 1.4rem
                 color: white
                 padding: 1rem 2rem
-                a
-                    color: white
-                    &:hover
-                        color: grey
+                color: white
+                &:hover
+                    color: grey
 
 .footer
     position: fixed
@@ -56,3 +53,6 @@ main
     display: flex
     justify-content: flex-start
     flex-wrap: wrap
+
+.focused
+    border: 3px solid white
