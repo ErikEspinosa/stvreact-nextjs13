@@ -1,5 +1,5 @@
 import Image from "next/image"
-import Link from "next/link"
+import Menu from "../Menu/Menu"
 
 export default function Header() {
     return (
@@ -14,12 +14,7 @@ export default function Header() {
                         priority
                     />
                 </div>
-                <ul className="menu">
-                    <li><Link href="/">Inicio</Link></li>
-                    <li><Link href="/peliculas">Peliculas</Link></li>
-                    <li><Link href="/series">Series</Link></li>
-                    <li><Link href="/tv-vivo">TV en vivo</Link></li>
-                </ul>
+                <Menu />
             </div>
         </header>
     )

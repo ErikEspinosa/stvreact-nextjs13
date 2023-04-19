@@ -1,24 +1,34 @@
 import Card from '../components/Card/Card'
+import { useFocusable, FocusContext } from '@noriginmedia/norigin-spatial-navigation'
+
+const CARDS_FOCUS_KEY = 'CARROUSEL'
 
 export default function Home({ cards }) {
+  const { ref, focusKey } = useFocusable({ focusKey: CARDS_FOCUS_KEY })
+
   if (!cards) {
     return (
       <h1>Cargando...</h1>
     )
   }
 
+  const onPress = (details) => { console.log(details)}
+
   return (
-      <div className='carrousel'>
+    <FocusContext.Provider value={focusKey}>
+      <div ref={ref} className='carrousel'>
         {
           cards.map((card) => 
             <Card 
               key={card.id}
               imageUrl={card.image_large}
               caption={card.title}
+              onEnterPress={onPress}
             />
           )
         }
       </div>
+    </FocusContext.Provider>
   )
 }
 
